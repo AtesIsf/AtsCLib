@@ -60,7 +60,7 @@ void arrprint(void *arr, int n, type_t type)
 }
 
 /*
-    Initializes a matrix of a given type
+    Initializes a 2D matrix of a given type
 
     Params:
     int row -> The number of rows
