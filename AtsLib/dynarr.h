@@ -80,6 +80,27 @@ void append(dynarr_t *arr, double n)
 }
 
 /*
+    Inserts an element into the given index
+
+    Params:
+    dynarr_t *arr -> The pointer to the array to be used
+    double n -> The value to be inserted
+    int ind -> The index to be inserted into
+
+    Returns: None
+*/
+void squeeze(dynarr_t *arr, double n, int ind)
+{
+    if (!(ind >= 0 && ind < arr->len)) return;
+
+    append(arr, arr->items[arr->len]); // in case there has to be a size increase
+    for (int i = arr->len-1; i>ind; i--)
+        arr->items[i] = arr->items[i-1];
+    arr->items[ind] = n;
+    
+}
+
+/*
     Removes the element at the given index
 
     Params:
