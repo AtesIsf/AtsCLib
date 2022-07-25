@@ -2,7 +2,7 @@
 #define ATSSET_H
 
 /*
-    Dynamic Array with no duplicates
+    Dynamic Array with no duplicate elements
     Goal: Minimum space complexity (Slow)
 */
 struct Set
@@ -21,5 +21,6 @@ typedef struct Set set_t;
     Returns:
     set_t set -> The set instance
 */
+set_t 
 
 #endif

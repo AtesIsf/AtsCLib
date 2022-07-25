@@ -6,6 +6,10 @@
 
 // STRUCT
 
+/*
+    Dynamic Array
+    Goal: Slight emphasis on space complexity (Reasonable speed)
+*/
 struct DynArr
 {
     double *items;
