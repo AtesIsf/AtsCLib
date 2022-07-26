@@ -32,11 +32,28 @@ set_t initset()
 
 /*
     Function for back-end use!!!
+    Swamps two numbers
+*/
+void __swap(double *x, double *y)
+{
+    double temp = *x;
+    *x = *y;
+    *y = temp;
+}
+
+/*
+    Function for back-end use!!!
     Sorts the set
 */
-void setsrt(set_t &set)
+void __setsrt(set_t *set) // Bubble Sort
 {
-
+    int i, j;
+    for (i = 0; i < set->size-1; i++)
+  
+        // Last i elements are already in place
+        for (j = 0; j < set->size-i-1; j++)
+            if (set->elements[j] > set->elements[j+1])
+                __swap(&set->elements[j], &set->elements[j+1]);
 }
 
 /*
@@ -59,6 +76,7 @@ void enlarge(set_t *set, double n)
         set->elements[i] = temp[i];
     set->size++;
     set->elements[set->size-1] = n;
+    __setsrt(set);
 }
 
 /*
@@ -74,7 +92,7 @@ void visualize(set_t set)
     printf("( ");
     for (int i = 0; i<set.size; i++)
         printf("%lf ", set.elements[i]);
-    printf(" )\n");
+    printf(")\n");
 }
 
 /*
@@ -89,10 +107,24 @@ void visualize(set_t set)
 */
 set_t getunion(set_t one, set_t two)
 {
-    set_t foo;
-    return foo;
+    set_t u;
+    u.size = one.size + two.size;
+    u.elements = (double *) malloc(sizeof(double) * (u.size));
+
+    int i;
+    int count = 0;
+    for (i = 0; i < one.size; i++)
+    {
+        u.elements[count] = one.elements[i];
+        count++;
+    }
+    for (i = 0; i < two.size; i++)
+    {
+        u.elements[count] = two.elements[i];
+        count++;
+    }
+    __setsrt(&u);
+    return u;
 }
-
-
 
 #endif
