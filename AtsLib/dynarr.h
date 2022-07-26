@@ -4,11 +4,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// STRUCT
-
 /*
     Dynamic Array
     Goal: Slight emphasis on space complexity (Reasonable speed)
+
+    Functions:
+    - initdynarr
+    - display
+    - append
+    - squeeze
+    - pop
+    - indexof
+    - yeet
 */
 struct DynArr
 {
@@ -16,11 +23,20 @@ struct DynArr
     int size;
     int len;
 };
+/*
+    Dynamic Array
+    Goal: Slight emphasis on space complexity (Reasonable speed)
 
+    Functions:
+    - initdynarr
+    - display
+    - append
+    - squeeze
+    - pop
+    - indexof
+    - yeet
+*/
 typedef struct DynArr dynarr_t;
-
-
-// FUNCTIONS
 
 
 /*

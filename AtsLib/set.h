@@ -6,29 +6,31 @@
 /*
     Sorted Dynamic Array with no duplicate elements
     Goal: Minimum space complexity (Slow)
+    
+    Functions:
+    - initset
+    - exists
+    - enlarge
+    - visualize
+    - getunion
 */
 struct Set
 {
     double *elements;
     int size;
 };
-typedef struct Set set_t;
-
 /*
-    Creates an instance of a set
-
-    Params: None
-
-    Returns:
-    set_t set
+    Sorted Dynamic Array with no duplicate elements
+    Goal: Minimum space complexity (Slow)
+    
+    Functions:
+    - initset
+    - exists
+    - enlarge
+    - visualize
+    - getunion
 */
-set_t initset()
-{
-    set_t set;
-    set.elements = NULL;
-    set.size = 0;
-    return set;
-}
+typedef struct Set set_t;
 
 /*
     Function for back-end use!!!
@@ -70,6 +72,22 @@ int __xist(set_t set, double n, int ind)
             break;
         }
     return index;
+}
+
+/*
+    Creates an instance of a set
+
+    Params: None
+
+    Returns:
+    set_t set
+*/
+set_t initset()
+{
+    set_t set;
+    set.elements = NULL;
+    set.size = 0;
+    return set;
 }
 
 /* 
