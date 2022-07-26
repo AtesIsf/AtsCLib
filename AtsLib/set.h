@@ -61,6 +61,7 @@ void __setsrt(set_t *set) // Bubble Sort
 /*
     Function for back-end use!!!
     Checks if an element exists in a set until a given index
+    (Linear Search)
 */
 int __xist(set_t set, double n, int ind)
 {
@@ -91,6 +92,23 @@ void __sync(set_t *set, int offset)
 }
 
 /*
+    Function for back-end use!!!
+    Performs Binary Search on the set
+*/
+int __binsrch(set_t set, double n, int low, int high)
+{
+    int mid = (low+high-1)/2;
+    if (high < low || mid < low || mid > high) return -1;
+
+    if (n == set.elements[mid])
+        return mid;
+    else if (n > set.elements[mid])
+        return __binsrch(set, n, mid+1, high);
+    else
+        return __binsrch(set, n, low, mid-1);
+    return -1;
+}
+/*
     Creates an instance of a set
 
     Params: None
@@ -108,6 +126,7 @@ set_t initset()
 
 /* 
     Checks if an element exists in a set
+    (Binary Search)
 
     Params:
     set_t set -> The set to be checked
@@ -119,16 +138,9 @@ set_t initset()
 */
 int exists(set_t set, double n)
 {
-    int index = -1;
-    for (int i = 0; i<set.size; i++)
-        if (set.elements[i] == n)
-        {
-            index = i;
-            break;
-        }
-    return index;
+    int result = __binsrch(set, n, 0, set.size-1);
+    return result;
 }
-
 
 /*
     Appends an element to the set
@@ -138,7 +150,7 @@ int exists(set_t set, double n)
     double n -> The number to be appended
 
     Returns:
-    int success -> Fail = -1, Success = 0
+    int success -> Success = 0, Fail = -1
 */
 int enlarge(set_t *set, double n)
 {
@@ -227,7 +239,7 @@ set_t getintersection(set_t one, set_t two)
 
     int count = 0;
     for (int i = 0; i<one.size; i++)
-        if (exists(two, one.elements[i]) != -1)
+        if (__xist(two, one.elements[i], two.size) != -1)
         {
             new.elements[count] = one.elements[i];
             count++;
