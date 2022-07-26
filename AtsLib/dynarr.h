@@ -107,17 +107,18 @@ void append(dynarr_t *arr, double n)
     double n -> The value to be inserted
     int ind -> The index to be inserted into
 
-    Returns: None
+    Returns:
+    int success -> Success = 0, Fail = -1
 */
-void squeeze(dynarr_t *arr, double n, int ind)
+int squeeze(dynarr_t *arr, double n, int ind)
 {
-    if (!(ind >= 0 && ind < arr->len)) return;
+    if (!(ind >= 0 && ind < arr->len)) return -1;
 
     append(arr, arr->items[arr->len]); // in case there has to be a size increase
     for (int i = arr->len-1; i>ind; i--)
         arr->items[i] = arr->items[i-1];
     arr->items[ind] = n;
-    
+    return 0;
 }
 
 /*
@@ -128,13 +129,14 @@ void squeeze(dynarr_t *arr, double n, int ind)
     int ind -> The index to be removed; the last element is removed
     if it equals -1
 
-    Returns: None
+    Returns:
+    int success -> Success = 0, Fail = -1
 */
 void pop(dynarr_t *arr, int ind)
 {
     arr->items[arr->len] = 0;
     arr->len--;
-    if (ind == -1) return;
+    if (ind == -1) return -1;
 
     double temp[arr->len];
 
@@ -153,6 +155,7 @@ void pop(dynarr_t *arr, int ind)
     arr->items = (double *) malloc(sizeof(double) * arr->size);
     for (i = 0; i<arr->len; i++)
         arr->items[i] = temp[i];
+    return 0;
 }
 
 /*
@@ -202,12 +205,13 @@ int *indexof(dynarr_t arr, double n)
     dynarr_t *arr -> Pointer to the Dynamic Array to be used
     double n -> The number to be removed
 
-    Returns: None
+    Returns:
+    int success -> Success = 0, Fail = -1
 */
 void yeet(dynarr_t *arr, double n)
 {
     int *ind = indexof(*arr, n);
-    if (ind[0] == -1) return;
+    if (ind[0] == -1) return -1;
     int i = 0;
     while (ind[i] != -1) // -1 -> terminator
     {
@@ -215,6 +219,7 @@ void yeet(dynarr_t *arr, double n)
         i++;
     }
     free(ind);
+    return 0;
 }
 
 #endif
