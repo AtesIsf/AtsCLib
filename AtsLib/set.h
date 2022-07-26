@@ -75,6 +75,22 @@ int __xist(set_t set, double n, int ind)
 }
 
 /*
+    Function for back-end use!!!
+    Synchronizes the set's size variable and element array's size
+*/
+void __sync(set_t *set, int offset)
+{
+    int i;
+    double temp[set->size];
+    for (i = 0; i<set->size; i++)
+        temp[i] = set->elements[i];
+    free(set->elements);
+    set->elements = (double *) malloc(sizeof(double) * (set->size+offset)); 
+    for (i = 0; i<set->size; i++)
+        set->elements[i] = temp[i];
+}
+
+/*
     Creates an instance of a set
 
     Params: None
@@ -127,13 +143,7 @@ int exists(set_t set, double n)
 int enlarge(set_t *set, double n)
 {
     if (exists(*set, n) != -1) return -1;
-    double temp[set->size];
-    int i;
-    for (i = 0; i<set->size; i++)
-        temp[i] = set->elements[i];
-    set->elements = (double *) malloc(sizeof(double) * (set->size+1)); 
-    for (i = 0; i<set->size; i++)
-        set->elements[i] = temp[i];
+    __sync(set, 1);
     set->size++;
     set->elements[set->size-1] = n;
     __setsrt(set);
@@ -193,14 +203,40 @@ set_t getunion(set_t one, set_t two)
         else u.size--;
     }
 
-    double temp[u.size];
-    for (i = 0; i<u.size; i++)
-        temp[i] = u.elements[i];  
-    u.elements = (double *) malloc(sizeof(double) * u.size);
-    for (i = 0; i<u.size; i++)
-        u.elements[i] = temp[i];
+    __sync(&u, 0);
     __setsrt(&u);
     return u;
 }
+
+/*
+    Get the intersection set of two sets
+
+    Params:
+    set_t one -> The first set
+    set_t two -> The second set
+
+    Returns:
+    set_t new -> The intersection set
+*/
+set_t getintersection(set_t one, set_t two)
+{
+    set_t new = initset();
+    set_t u = getunion(one, two);
+    new.size = u.size;
+    new.elements = (double *) malloc(sizeof(double) * new.size);
+    
+    int count = 0;
+    for (int i = 0; i<u.size; i++)
+        if (exists(one, u.elements[i]) != -1 && exists(two, u.elements[i]) != -1)
+        {
+            new.elements[count] = u.elements[i];
+            count++;
+        }
+        else new.size--;
+    __sync(&new, 0);
+    __setsrt(&new);
+    return new;
+}
+
 
 #endif
