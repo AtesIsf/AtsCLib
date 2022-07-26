@@ -132,7 +132,7 @@ int squeeze(dynarr_t *arr, double n, int ind)
     Returns:
     int success -> Success = 0, Fail = -1
 */
-void pop(dynarr_t *arr, int ind)
+int pop(dynarr_t *arr, int ind)
 {
     arr->items[arr->len] = 0;
     arr->len--;
