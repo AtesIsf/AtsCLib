@@ -221,15 +221,15 @@ set_t getunion(set_t one, set_t two)
 set_t getintersection(set_t one, set_t two)
 {
     set_t new = initset();
-    set_t u = getunion(one, two);
-    new.size = u.size;
+    if (one.size >= two.size) new.size = one.size;
+    else new.size = two.size;
     new.elements = (double *) malloc(sizeof(double) * new.size);
-    
+
     int count = 0;
-    for (int i = 0; i<u.size; i++)
-        if (exists(one, u.elements[i]) != -1 && exists(two, u.elements[i]) != -1)
+    for (int i = 0; i<one.size; i++)
+        if (exists(two, one.elements[i]) != -1)
         {
-            new.elements[count] = u.elements[i];
+            new.elements[count] = one.elements[i];
             count++;
         }
         else new.size--;
