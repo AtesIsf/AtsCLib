@@ -222,4 +222,29 @@ int yeet(dynarr_t *arr, double n)
     return 0;
 }
 
+/*
+    Manually reserves some extra space for the given Dynamic Array
+
+    Params:
+    dynarr_t *arr -> Pointer to the array to be used
+    int n -> How much the space will be expanded in terms of elements
+
+    Returns: None
+*/
+void manualreserve(dynarr_t *arr, int n)
+{
+    double temp[arr->len];
+    int i;
+
+    for (i = 0; i<arr->len; i++)
+        temp[i] = arr->items[i];
+
+    arr->size+=n;
+    free(arr->items);
+    arr->items = (double *) malloc(sizeof(double) * arr->size);
+
+    for (i = 0; i<arr->len; i++)
+        arr->items[i] = temp[i];
+}
+
 #endif
