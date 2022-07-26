@@ -50,6 +50,7 @@ void __swap(double *x, double *y)
 /*
     Function for back-end use!!!
     Sorts the set
+    (Bubble Sort)
 */
 void __setsrt(set_t *set) // Bubble Sort
 {
@@ -243,7 +244,7 @@ set_t getintersection(set_t one, set_t two)
 
     int count = 0;
     for (int i = 0; i<one.size; i++)
-        if (exists(two, one.elements[i]) != -1) // TURN TO EXISTS()
+        if (exists(two, one.elements[i]) != -1)
         {
             new.elements[count] = one.elements[i];
             count++;
@@ -264,9 +265,30 @@ set_t getintersection(set_t one, set_t two)
     Returns:
     set_t diff -> The difference set
 */
-set_t getdifference(set_t one, set_t two) // TODO 
+set_t getdifference(set_t one, set_t two)
 {
     set_t diff;
+    diff.size = one.size + two.size;
+    diff.elements = (double *) malloc(sizeof(double) * diff.size);
+
+    int i;
+    int counter = 0;
+    for (i = 0; i<one.size; i++)
+        if (exists(two, one.elements[i]) == -1)
+        {
+            diff.elements[counter] = one.elements[i];
+            counter++;
+        }
+        else diff.size--;
+    for (i = 0; i<two.size; i++)
+        if (exists(one, two.elements[i]) == -1)
+        {
+            diff.elements[counter] = two.elements[i];
+            counter++;
+        }
+        else diff.size--;
+    __sync(&diff, 0);
+    __setsrt(&diff);
     return diff;
 }
 
