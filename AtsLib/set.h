@@ -250,5 +250,9 @@ set_t getintersection(set_t one, set_t two)
     return new;
 }
 
+set_t getdifference(set_t one, set_t two)
+{
+    
+}
 
 #endif
