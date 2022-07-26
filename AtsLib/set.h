@@ -56,6 +56,22 @@ void __setsrt(set_t *set) // Bubble Sort
                 __swap(&set->elements[j], &set->elements[j+1]);
 }
 
+/*
+    Function for back-end use!!!
+    Checks if an element exists in a set until a given index
+*/
+int __xist(set_t set, double n, int ind)
+{
+    int index = -1;
+    for (int i = 0; i<ind; i++)
+        if (set.elements[i] == n)
+        {
+            index = i;
+            break;
+        }
+    return index;
+}
+
 /* 
     Checks if an element exists in a set
 
@@ -78,6 +94,7 @@ int exists(set_t set, double n)
         }
     return index;
 }
+
 
 /*
     Appends an element to the set
@@ -134,20 +151,36 @@ void visualize(set_t set)
 set_t getunion(set_t one, set_t two)
 {
     set_t u = initset();
-
+    u.size = one.size + two.size;
+    u.elements = (double *) malloc(sizeof(double) * u.size);
     int i;
     int count = 0;
 
     for (i = 0; i < one.size; i++)
     {
-        enlarge(&u, one.elements[i]);
-        count++;
+        if (__xist(u, one.elements[i], count) == -1)
+        {
+            u.elements[count] = one.elements[i];
+            count++;
+        }
+        else u.size--;
     }
     for (i = 0; i < two.size; i++)
     {
-        enlarge(&u, two.elements[i]);
-        count++;
+        if (__xist(u, two.elements[i], count) == -1)
+        {
+            u.elements[count] = two.elements[i];
+            count++;
+        }
+        else u.size--;
     }
+
+    double temp[u.size];
+    for (i = 0; i<u.size; i++)
+        temp[i] = u.elements[i];  
+    u.elements = (double *) malloc(sizeof(double) * u.size);
+    for (i = 0; i<u.size; i++)
+        u.elements[i] = temp[i];
     __setsrt(&u);
     return u;
 }
