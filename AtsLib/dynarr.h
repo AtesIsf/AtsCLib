@@ -208,7 +208,7 @@ int *indexof(dynarr_t arr, double n)
     Returns:
     int success -> Success = 0, Fail = -1
 */
-void yeet(dynarr_t *arr, double n)
+int yeet(dynarr_t *arr, double n)
 {
     int *ind = indexof(*arr, n);
     if (ind[0] == -1) return -1;
