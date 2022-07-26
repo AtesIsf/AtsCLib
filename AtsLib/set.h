@@ -13,6 +13,8 @@
     - enlarge
     - visualize
     - getunion
+    - getintersection
+    - getdifference
 */
 struct Set
 {
@@ -29,6 +31,8 @@ struct Set
     - enlarge
     - visualize
     - getunion
+    - getintersection
+    - getdifference
 */
 typedef struct Set set_t;
 
@@ -97,7 +101,7 @@ void __sync(set_t *set, int offset)
 */
 int __binsrch(set_t set, double n, int low, int high)
 {
-    int mid = (low+high-1)/2;
+    int mid = (low+high)/2;
     if (high < low || mid < low || mid > high) return -1;
 
     if (n == set.elements[mid])
@@ -239,7 +243,7 @@ set_t getintersection(set_t one, set_t two)
 
     int count = 0;
     for (int i = 0; i<one.size; i++)
-        if (__xist(two, one.elements[i], two.size) != -1)
+        if (exists(two, one.elements[i]) != -1) // TURN TO EXISTS()
         {
             new.elements[count] = one.elements[i];
             count++;
@@ -250,9 +254,20 @@ set_t getintersection(set_t one, set_t two)
     return new;
 }
 
-set_t getdifference(set_t one, set_t two)
+/*
+    Get the difference of two sets
+
+    Params:
+    set_t one -> The first set
+    set_t two -> The second set
+
+    Returns:
+    set_t diff -> The difference set
+*/
+set_t getdifference(set_t one, set_t two) // TODO 
 {
-    
+    set_t diff;
+    return diff;
 }
 
 #endif
