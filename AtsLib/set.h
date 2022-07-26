@@ -56,6 +56,29 @@ void __setsrt(set_t *set) // Bubble Sort
                 __swap(&set->elements[j], &set->elements[j+1]);
 }
 
+/* 
+    Checks if an element exists in a set
+
+    Params:
+    set_t set -> The set to be checked
+    double n -> The number to be checked
+
+    Returns: 
+    int index -> The index of the number in the set 
+    (-1 if it doesn't exists in the set)
+*/
+int exists(set_t set, double n)
+{
+    int index = -1;
+    for (int i = 0; i<set.size; i++)
+        if (set.elements[i] == n)
+        {
+            index = i;
+            break;
+        }
+    return index;
+}
+
 /*
     Appends an element to the set
 
@@ -63,10 +86,12 @@ void __setsrt(set_t *set) // Bubble Sort
     set_t *set -> Pointer to the set to be modified
     double n -> The number to be appended
 
-    Returns: None
+    Returns:
+    int success -> Fail = -1, Success = 0
 */
-void enlarge(set_t *set, double n)
+int enlarge(set_t *set, double n)
 {
+    if (exists(*set, n) != -1) return -1;
     double temp[set->size];
     int i;
     for (i = 0; i<set->size; i++)
@@ -77,6 +102,7 @@ void enlarge(set_t *set, double n)
     set->size++;
     set->elements[set->size-1] = n;
     __setsrt(set);
+    return 0;
 }
 
 /*
@@ -107,20 +133,19 @@ void visualize(set_t set)
 */
 set_t getunion(set_t one, set_t two)
 {
-    set_t u;
-    u.size = one.size + two.size;
-    u.elements = (double *) malloc(sizeof(double) * (u.size));
+    set_t u = initset();
 
     int i;
     int count = 0;
+
     for (i = 0; i < one.size; i++)
     {
-        u.elements[count] = one.elements[i];
+        enlarge(&u, one.elements[i]);
         count++;
     }
     for (i = 0; i < two.size; i++)
     {
-        u.elements[count] = two.elements[i];
+        enlarge(&u, two.elements[i]);
         count++;
     }
     __setsrt(&u);
