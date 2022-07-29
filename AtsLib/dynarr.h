@@ -13,7 +13,7 @@
     - display
     - append
     - squeeze
-    - pop
+    - pick
     - indexof
     - yeet
 */
@@ -32,7 +32,7 @@ struct DynArr
     - display
     - append
     - squeeze
-    - pop
+    - pick
     - indexof
     - yeet
 */
@@ -132,7 +132,7 @@ int squeeze(dynarr_t *arr, double n, int ind)
     Returns:
     int success -> Success = 0, Fail = -1
 */
-int pop(dynarr_t *arr, int ind)
+int pick(dynarr_t *arr, int ind)
 {
     arr->items[arr->len] = 0;
     arr->len--;
@@ -215,7 +215,7 @@ int yeet(dynarr_t *arr, double n)
     int i = 0;
     while (ind[i] != -1) // -1 -> terminator
     {
-        pop(arr, ind[i]);
+        pick(arr, ind[i]);
         i++;
     }
     free(ind);
