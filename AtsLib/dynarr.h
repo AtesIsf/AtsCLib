@@ -16,6 +16,11 @@
     - pick
     - indexof
     - yeet
+ 
+    Variables (DO NOT MODIFY FOR PROPER FUNCTIONALITY!!!):
+    - double *items
+    - int size
+    - int len
 */
 struct DynArr
 {
@@ -35,6 +40,11 @@ struct DynArr
     - pick
     - indexof
     - yeet
+ 
+    Variables (DO NOT MODIFY FOR PROPER FUNCTIONALITY!!!):
+    - double *items
+    - int size
+    - int len
 */
 typedef struct DynArr dynarr_t;
 

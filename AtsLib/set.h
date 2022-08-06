@@ -15,6 +15,10 @@
     - getunion
     - getintersection
     - getdifference
+ 
+    Varibles (DO NOT MODIFY FOR PROPER FUNCTIONALITY!!!):
+    - double *elements
+    - int size
 */
 struct Set
 {
@@ -33,6 +37,10 @@ struct Set
     - getunion
     - getintersection
     - getdifference
+ 
+    Varibles (DO NOT MODIFY FOR PROPER FUNCTIONALITY!!!):
+    - double *elements
+    - int size
 */
 typedef struct Set set_t;
 
@@ -164,6 +172,36 @@ int enlarge(set_t *set, double n)
     set->size++;
     set->elements[set->size-1] = n;
     __setsrt(set);
+    return 0;
+}
+
+/*
+    Removes an element from the set
+
+    Params:
+    set_t *set -> Pointer to the set to be modified
+    int ind -> The index of the number to be removed
+
+    Returns:
+    int success -> Success = 0, Fail = -1
+*/
+int shrink(set_t *set, int ind)
+{
+    if (ind < 0 || ind >= set->size) return -1;
+    set_t temp;
+    temp.size = set->size-1;
+    temp.elements = (double *) malloc(sizeof(double) * temp.size);
+    int count = 0;
+    for (int i = 0; i<set->size; i++)
+    {
+        if (i == ind)
+            continue;
+        temp.elements[count] = set->elements[i];
+        count++; 
+    }
+    free(set->elements);
+    set->elements = temp.elements;
+    set->size--;
     return 0;
 }
 
