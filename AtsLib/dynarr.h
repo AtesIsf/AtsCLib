@@ -22,32 +22,12 @@
     - int size
     - int len
 */
-struct DynArr
+typedef struct DynArr
 {
     double *items;
     int size;
     int len;
-};
-/*
-    Dynamic Array
-    Goal: Slight emphasis on space complexity (Reasonable speed)
-
-    Functions:
-    - initdynarr
-    - display
-    - append
-    - squeeze
-    - pick
-    - indexof
-    - yeet
- 
-    Variables (DO NOT MODIFY FOR PROPER FUNCTIONALITY!!!):
-    - double *items
-    - int size
-    - int len
-*/
-typedef struct DynArr dynarr_t;
-
+}dynarr_t;
 
 /*
     Initializes a Dynamic Array

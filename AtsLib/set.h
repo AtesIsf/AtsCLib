@@ -2,6 +2,7 @@
 #define ATSSET_H
 
 #include <stdlib.h>
+#include <stdio.h>
 
 /*
     Sorted Dynamic Array with no duplicate elements
@@ -20,29 +21,11 @@
     - double *elements
     - int size
 */
-struct Set
+typedef struct Set
 {
     double *elements;
     int size;
-};
-/*
-    Sorted Dynamic Array with no duplicate elements
-    Goal: Minimum space complexity (Slow)
-    
-    Functions:
-    - initset
-    - exists
-    - enlarge
-    - visualize
-    - getunion
-    - getintersection
-    - getdifference
- 
-    Varibles (DO NOT MODIFY FOR PROPER FUNCTIONALITY!!!):
-    - double *elements
-    - int size
-*/
-typedef struct Set set_t;
+}set_t;
 
 /*
     Function for back-end use!!!
