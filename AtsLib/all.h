@@ -5,6 +5,5 @@
 #include "dynarr.h"
 #include "sugar.h"
 #include "set.h"
-#include "structlist.h"
 
 #endif
