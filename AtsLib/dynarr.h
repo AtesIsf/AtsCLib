@@ -10,6 +10,7 @@
 
     Functions:
     - initdynarr
+    - freedynarr
     - display
     - append
     - squeeze
@@ -35,30 +36,45 @@ typedef struct DynArr
     Params: None
 
     Returns:
-    dynarr_t arr -> Dynamic Array with initial size 2
+    dynarr_t *arr -> Pointer to a Dynamic Array with initial size 2
 */
-dynarr_t initdynarr()
+dynarr_t *initdynarr()
 {
-    dynarr_t arr;
-    arr.size = 2;
-    arr.len = 0;
-    arr.items = (double *) malloc(sizeof(double) * arr.size);
+    dynarr_t *arr = (dynarr_t *) malloc(sizeof(dynarr_t));
+    arr->size = 2;
+    arr->len = 0;
+    arr->items = (double *) malloc(sizeof(double) * arr->size);
     return arr;
+}
+
+/*
+    Frees the Memory Used by the Dynamic Array
+    DO NOT REFERENCE THE DYNAMIC ARRAY AFTER THIS!
+
+    Params:
+    dynarr_t *arr -> The pointer to the dynamic array to be freed
+
+    Returns: None
+*/
+void freedynarr(dynarr_t *arr)
+{
+    free(arr->items);
+    free(arr);
 }
 
 /*
     Prints the given Dynamic Array
 
     Params: 
-    dynarr_t arr -> The Dynamic Array to be printed
+    dynarr_t *arr -> A Pointer to the Dynamic Array to be printed
 
     Returns: None
 */
-void display(dynarr_t arr)
+void display(dynarr_t *arr)
 {
     printf("{ ");
-    for (int i = 0; i<arr.len; i++)
-        printf("%lf ", arr.items[i]);
+    for (int i = 0; i<arr->len; i++)
+        printf("%lf ", arr->items[i]);
     printf("}\n");
 }
 
@@ -115,7 +131,7 @@ int squeeze(dynarr_t *arr, double n, int ind)
     Removes the element at the given index
 
     Params:
-    dynarr_t *arr -> Pointer to the Dynamic Array to be used
+    dynarr_t *arr -> A Pointer to the Dynamic Array to be used
     int ind -> The index to be removed; the last element is removed
     if it equals -1
 
@@ -152,22 +168,22 @@ int pick(dynarr_t *arr, int ind)
     Finds the indexes of an each occurance of a number
 
     Params: 
-    dynarr_t arr -> The Dynamic Array to be checked
+    dynarr_t arr -> A Pointer to the Dynamic Array to be checked
     double n -> The value to be searched
 
     Returns: 
-    int *indexes
+    int *indexes (Allocated to the heap)
     -1 -> Terminator at the end of the returned array to help with loops etc, 
     no instances were found if it's the only element of the returned array
 */
-int *indexof(dynarr_t arr, double n)
+int *indexof(dynarr_t *arr, double n)
 {
-    int list[arr.len];
+    int list[arr->len];
     int list_size = 0;
     int i;
 
-    for (i = 0; i<arr.len; i++)
-        if (arr.items[i] == n)
+    for (i = 0; i<arr->len; i++)
+        if (arr->items[i] == n)
         {
             list[list_size] = i;
             list_size++;
@@ -200,7 +216,7 @@ int *indexof(dynarr_t arr, double n)
 */
 int yeet(dynarr_t *arr, double n)
 {
-    int *ind = indexof(*arr, n);
+    int *ind = indexof(arr, n);
     if (ind[0] == -1) return -1;
     int i = 0;
     while (ind[i] != -1) // -1 -> terminator
